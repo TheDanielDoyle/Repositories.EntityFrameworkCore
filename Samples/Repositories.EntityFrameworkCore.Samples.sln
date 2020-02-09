@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories.EntityFrameworkCore.Samples", "Repositories.EntityFrameworkCore.Samples\Repositories.EntityFrameworkCore.Samples.csproj", "{45C726A3-58D9-4E36-83D5-B5B939FA5759}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories.EntityFrameworkCore", "..\Source\Repositories.EntityFrameworkCore\Repositories.EntityFrameworkCore.csproj", "{FD221041-0B90-4E81-A198-30A3E29626DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45C726A3-58D9-4E36-83D5-B5B939FA5759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C726A3-58D9-4E36-83D5-B5B939FA5759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C726A3-58D9-4E36-83D5-B5B939FA5759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C726A3-58D9-4E36-83D5-B5B939FA5759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD221041-0B90-4E81-A198-30A3E29626DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD221041-0B90-4E81-A198-30A3E29626DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD221041-0B90-4E81-A198-30A3E29626DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD221041-0B90-4E81-A198-30A3E29626DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {712CFFF2-C2C5-4757-8FFD-3C7D65EFC45E}
+	EndGlobalSection
+EndGlobal
