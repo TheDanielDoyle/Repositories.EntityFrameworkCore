@@ -1,9 +1,8 @@
-﻿using Repositories.Abstractions;
-using Repositories.EntityFrameworkCore.Samples.Data.Repositories;
+﻿using Repositories.EntityFrameworkCore.Samples.Data.Repositories;
 
 namespace Repositories.EntityFrameworkCore.Samples.Data
 {
-    internal interface IDataContext : IContext
+    internal interface IUnitOfWork : IDataContext
     {
         public IAppleRepository Apples { get; }
 

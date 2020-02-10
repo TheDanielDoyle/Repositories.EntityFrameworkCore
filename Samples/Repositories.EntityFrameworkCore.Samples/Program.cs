@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories.EntityFrameworkCore.Samples.Data;
 using Repositories.EntityFrameworkCore.Samples.Data.Queries;
-using Repositories.EntityFrameworkCore.Samples.Data.Repositories;
 using Repositories.EntityFrameworkCore.Samples.Models;
 
 namespace Repositories.EntityFrameworkCore.Samples
@@ -33,7 +32,7 @@ namespace Repositories.EntityFrameworkCore.Samples
         {
             using (IServiceScope scope = host.Services.CreateScope())
             {
-                IDataContext context = scope.ServiceProvider.GetService<IDataContext>();
+                IUnitOfWork context = scope.ServiceProvider.GetService<IUnitOfWork>();
                 await AddFruitsAsync(context);
                 await context.SaveChangesAsync();
                 await WriteFruitCountsAsync(context);
@@ -46,14 +45,14 @@ namespace Repositories.EntityFrameworkCore.Samples
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkInMemoryDatabase();
-            services.AddDbContext<IDataContext, DataContext>((provider, options) =>
+            services.AddDbContext<IUnitOfWork, UnitOfWork>((provider, options) =>
             {
                 options.UseInMemoryDatabase("Sample");
                 options.UseInternalServiceProvider(provider);
             });
         }
 
-        private static async Task AddFruitsAsync(IDataContext context)
+        private static async Task AddFruitsAsync(IUnitOfWork context)
         {
             await context.Apples.AddAsync(new Apple("Cortland"));
             await context.Apples.AddAsync(new Apple("Opal"));
@@ -82,7 +81,7 @@ namespace Repositories.EntityFrameworkCore.Samples
             });
         }
 
-        private static async Task WriteFruitsAsync(IDataContext context)
+        private static async Task WriteFruitsAsync(IUnitOfWork context)
         {
             Console.WriteLine("Retrieving Pyrasta Pear");
             Pear pyrastaPear = await context.Pears.FindByIdAsync(_pyrastaPearId.ToString());
@@ -111,7 +110,7 @@ namespace Repositories.EntityFrameworkCore.Samples
             }
         }
 
-        private static async Task WriteFruitCountsAsync(IDataContext context)
+        private static async Task WriteFruitCountsAsync(IUnitOfWork context)
         {
             Console.WriteLine("Counting Blood Oranges.");
             long bloodOrangeCount = await context.Oranges.CountQueryAsync(o => o.Type == "Blood");

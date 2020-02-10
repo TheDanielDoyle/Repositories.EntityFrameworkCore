@@ -3,9 +3,9 @@ using Repositories.EntityFrameworkCore.Samples.Data.Repositories;
 
 namespace Repositories.EntityFrameworkCore.Samples.Data
 {
-    internal class DataContext : DbContext, IDataContext
+    internal class UnitOfWork : DbContext, IUnitOfWork
     {
-        public DataContext(DbContextOptions options) : base(options)
+        public UnitOfWork(DbContextOptions options) : base(options)
         {
             Apples = new AppleRepository(this);
             Bananas = new BananaRepository(this);
@@ -24,7 +24,7 @@ namespace Repositories.EntityFrameworkCore.Samples.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            builder.ApplyConfigurationsFromAssembly(typeof(UnitOfWork).Assembly);
         }
     }
 }
