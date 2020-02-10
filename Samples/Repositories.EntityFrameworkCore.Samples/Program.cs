@@ -113,11 +113,11 @@ namespace Repositories.EntityFrameworkCore.Samples
         private static async Task WriteFruitCountsAsync(IUnitOfWork context)
         {
             Console.WriteLine("Counting Blood Oranges.");
-            long bloodOrangeCount = await context.Oranges.CountQueryAsync(o => o.Type == "Blood");
+            long bloodOrangeCount = await context.Oranges.CountAsync(o => o.Type == "Blood");
             Console.WriteLine($"No. Blood Oranges: {bloodOrangeCount}");
 
             Console.WriteLine("Counting Cortland Apples.");
-            long cortlandApples = await context.Apples.CountQueryAsync(new CortlandApplesQuery());
+            long cortlandApples = await context.Apples.CountAsync(new CortlandApplesQuery());
             Console.WriteLine($"No. Cortland Apples: {cortlandApples}");
 
             Console.WriteLine("Retrieving Favourite Bananas.");

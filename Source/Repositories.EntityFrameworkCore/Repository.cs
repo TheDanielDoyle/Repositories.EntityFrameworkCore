@@ -39,14 +39,14 @@ namespace Repositories.EntityFrameworkCore
             return _context.Set<TEntity>().LongCountAsync(cancellation);
         }
 
-        public virtual Task<long> CountQueryAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation = default)
+        public virtual Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation = default)
         {
             return _context.Set<TEntity>().LongCountAsync(predicate, cancellation);
         }
 
-        public virtual Task<long> CountQueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
+        public virtual Task<long> CountAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
-            return CountQueryAsync(query.GetQuery(), cancellation);
+            return CountAsync(query.GetQuery(), cancellation);
         }
 
         public virtual async Task<TEntity> FindByIdAsync(TId id, CancellationToken cancellation = default)
