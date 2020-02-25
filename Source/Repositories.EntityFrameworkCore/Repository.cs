@@ -51,13 +51,13 @@ namespace Repositories.EntityFrameworkCore
 
         public virtual async Task<TEntity> FindByIdAsync(TId id, CancellationToken cancellation = default)
         {
-            TEntity entity = await ((DbSet<TEntity>)HydrateQueryable(_context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation);
+            TEntity entity = await ((DbSet<TEntity>)HydrateQueryable(_context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation).ConfigureAwait(false);
             return entity;
         }
 
         public virtual async Task<IEnumerable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation)
         {
-            return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).ToListAsync(cancellation);
+            return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).ToListAsync(cancellation).ConfigureAwait(false);
         }
 
         public virtual Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation)
