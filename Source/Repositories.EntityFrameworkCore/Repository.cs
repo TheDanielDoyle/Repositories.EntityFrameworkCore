@@ -60,9 +60,19 @@ namespace Repositories.EntityFrameworkCore
             return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).ToListAsync(cancellation).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate, int skip, int take, CancellationToken cancellation = new CancellationToken())
+        {
+            return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).Skip(skip).Take(take).ToListAsync(cancellation).ConfigureAwait(false);
+        }
+
         public virtual Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation)
         {
             return QueryAsync(query.GetQuery(), cancellation);
+        }
+
+        public Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, int skip, int take, CancellationToken cancellation = new CancellationToken())
+        {
+            return QueryAsync(query.GetQuery(), skip, take, cancellation);
         }
 
         public virtual Task RemoveAsync(TEntity entity, CancellationToken cancellation = default)
