@@ -20,6 +20,11 @@ namespace Repositories.EntityFrameworkCore.Samples.Data.Queries
         {
             return banana => _bananaTypes.Types.Contains(banana.Type);
         }
+
+        public IQueryable<Banana> Hydrate(IQueryable<Banana> entity)
+        {
+            return entity;
+        }
     }
 
     internal class FavouriteBananaTypes

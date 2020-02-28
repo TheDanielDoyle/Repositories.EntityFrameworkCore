@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
-    <PackageReference Include="TheDanielDoyle.Repositories.Abstractions" Version="2.1.0" />
+    <PackageReference Include="TheDanielDoyle.Repositories.Abstractions" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

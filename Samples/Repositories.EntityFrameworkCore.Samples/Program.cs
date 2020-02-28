@@ -87,13 +87,6 @@ namespace Repositories.EntityFrameworkCore.Samples
             Pear pyrastaPear = await context.Pears.FindByIdAsync(_pyrastaPearId.ToString());
             Console.WriteLine($"\tType: {pyrastaPear.Type} Id {pyrastaPear.Id}");
 
-            Console.WriteLine("Retrieving Blood Oranges.");
-            IEnumerable<Orange> bloodOranges = await context.Oranges.QueryAsync(o => o.Type == "Blood");
-            foreach (Orange orange in bloodOranges.ToList())
-            {
-                Console.WriteLine($"\tType: {orange.Type} Id: {orange.Id}");
-            }
-
             Console.WriteLine("Retrieving Cortland Apples.");
             IEnumerable<Apple> cortlandApples = await context.Apples.QueryAsync(new CortlandApplesQuery());
             foreach (Apple apple in cortlandApples.ToList())
@@ -112,10 +105,6 @@ namespace Repositories.EntityFrameworkCore.Samples
 
         private static async Task WriteFruitCountsAsync(IUnitOfWork context)
         {
-            Console.WriteLine("Counting Blood Oranges.");
-            long bloodOrangeCount = await context.Oranges.CountAsync(o => o.Type == "Blood");
-            Console.WriteLine($"No. Blood Oranges: {bloodOrangeCount}");
-
             Console.WriteLine("Counting Cortland Apples.");
             long cortlandApples = await context.Apples.CountAsync(new CortlandApplesQuery());
             Console.WriteLine($"No. Cortland Apples: {cortlandApples}");

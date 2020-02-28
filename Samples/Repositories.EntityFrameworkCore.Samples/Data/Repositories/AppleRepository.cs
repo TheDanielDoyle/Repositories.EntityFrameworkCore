@@ -10,7 +10,7 @@ namespace Repositories.EntityFrameworkCore.Samples.Data.Repositories
         {
         }
 
-        protected override IQueryable<Apple> HydrateQueryable(IQueryable<Apple> queryable)
+        protected override IQueryable<Apple> Hydrate(IQueryable<Apple> queryable)
         {
             return queryable;
         }

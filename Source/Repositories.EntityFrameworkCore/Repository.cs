@@ -12,77 +12,57 @@ namespace Repositories.EntityFrameworkCore
     public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
         where TEntity : class
     {
-        private readonly DbContext _context;
+        private readonly DbContext context;
 
         protected Repository(DbContext context)
         {
-            _context = context;
-        }
-
-        protected virtual IQueryable<TEntity> HydrateQueryable(IQueryable<TEntity> queryable)
-        {
-            return queryable;
+            this.context = context;
         }
 
         public virtual Task AddAsync(TEntity entity, CancellationToken cancellation = default)
         {
-            return Task.FromResult(_context.AddAsync(entity, cancellation));
+            return Task.FromResult(this.context.AddAsync(entity, cancellation));
         }
 
         public virtual Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellation = default)
         {
-            return _context.AddRangeAsync(entities, cancellation);
+            return this.context.AddRangeAsync(entities, cancellation);
         }
 
         public virtual Task<long> CountAsync(CancellationToken cancellation = default)
         {
-            return _context.Set<TEntity>().LongCountAsync(cancellation);
-        }
-
-        public virtual Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation = default)
-        {
-            return _context.Set<TEntity>().LongCountAsync(predicate, cancellation);
+            return this.context.Set<TEntity>().LongCountAsync(cancellation);
         }
 
         public virtual Task<long> CountAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
-            return CountAsync(query.GetQuery(), cancellation);
+            return this.context.Set<TEntity>().LongCountAsync(query.GetQuery(), cancellation);
         }
 
         public virtual async Task<TEntity> FindByIdAsync(TId id, CancellationToken cancellation = default)
         {
-            TEntity entity = await ((DbSet<TEntity>)HydrateQueryable(_context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation).ConfigureAwait(false);
+            TEntity entity = await ((DbSet<TEntity>)Hydrate(this.context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation).ConfigureAwait(false);
             return entity;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellation)
+        public virtual async Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
-            return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).ToListAsync(cancellation).ConfigureAwait(false);
-        }
-
-        public async Task<IEnumerable<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> predicate, int skip, int take, CancellationToken cancellation = new CancellationToken())
-        {
-            return await HydrateQueryable(_context.Set<TEntity>()).Where(predicate).Skip(skip).Take(take).ToListAsync(cancellation).ConfigureAwait(false);
-        }
-
-        public virtual Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation)
-        {
-            return QueryAsync(query.GetQuery(), cancellation);
-        }
-
-        public Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, int skip, int take, CancellationToken cancellation = new CancellationToken())
-        {
-            return QueryAsync(query.GetQuery(), skip, take, cancellation);
+            return await query.Hydrate(Hydrate(this.context.Set<TEntity>()).Where(query.GetQuery())).ToListAsync(cancellation).ConfigureAwait(false);
         }
 
         public virtual Task RemoveAsync(TEntity entity, CancellationToken cancellation = default)
         {
-            return Task.FromResult(_context.Remove(entity));
+            return Task.FromResult(this.context.Remove(entity));
         }
 
         public virtual Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellation = default)
         {
-            return Task.FromResult(_context.Remove(entities));
+            return Task.FromResult(this.context.Remove(entities));
+        }
+
+        protected virtual IQueryable<TEntity> Hydrate(IQueryable<TEntity> queryable)
+        {
+            return queryable;
         }
     }
 }
