@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +46,11 @@ namespace Repositories.EntityFrameworkCore
         public virtual async Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
             return await query.Hydrate(Hydrate(this.context.Set<TEntity>()).Where(query.GetQuery())).ToListAsync(cancellation).ConfigureAwait(false);
+        }
+
+        public virtual async Task<TEntity> QuerySingleAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
+        {
+            return await query.Hydrate(Hydrate(this.context.Set<TEntity>()).Where(query.GetQuery())).FirstOrDefaultAsync(cancellation).ConfigureAwait(false);
         }
 
         public virtual Task RemoveAsync(TEntity entity, CancellationToken cancellation = default)
