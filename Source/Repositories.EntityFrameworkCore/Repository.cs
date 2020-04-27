@@ -41,7 +41,7 @@ namespace Repositories.EntityFrameworkCore
 
         public virtual Task<TEntity> FindByIdAsync(TId id, CancellationToken cancellation = default)
         {
-            return this.context.Set<TEntity>().Where(GetEquality(id)).FirstOrDefaultAsync(cancellation);
+            return ProjectTo(this.context.Set<TEntity>().Where(GetEquality(id))).FirstOrDefaultAsync(cancellation);
         }
 
         protected abstract Expression<Func<TEntity, bool>> GetEquality(TId id);
