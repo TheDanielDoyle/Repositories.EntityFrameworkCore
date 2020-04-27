@@ -21,7 +21,7 @@ namespace Repositories.EntityFrameworkCore.Samples.Data.Queries
             return banana => _bananaTypes.Types.Contains(banana.Type);
         }
 
-        public IQueryable<Banana> Hydrate(IQueryable<Banana> entity)
+        public IQueryable<Banana> ProjectTo(IQueryable<Banana> entity)
         {
             return entity;
         }

@@ -39,18 +39,18 @@ namespace Repositories.EntityFrameworkCore
 
         public virtual async Task<TEntity> FindByIdAsync(TId id, CancellationToken cancellation = default)
         {
-            TEntity entity = await ((DbSet<TEntity>)Hydrate(this.context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation).ConfigureAwait(false);
+            TEntity entity = await ((DbSet<TEntity>)ProjectTo(this.context.Set<TEntity>())).FindAsync(new object[] { id }, cancellation).ConfigureAwait(false);
             return entity;
         }
 
         public virtual async Task<IEnumerable<TEntity>> QueryAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
-            return await query.Hydrate(Hydrate(this.context.Set<TEntity>()).Where(query.GetQuery())).ToListAsync(cancellation).ConfigureAwait(false);
+            return await query.ProjectTo(this.context.Set<TEntity>()).Where(query.GetQuery()).ToListAsync(cancellation).ConfigureAwait(false);
         }
 
         public virtual async Task<TEntity> QuerySingleAsync(IRepositoryQuery<TEntity> query, CancellationToken cancellation = default)
         {
-            return await query.Hydrate(Hydrate(this.context.Set<TEntity>()).Where(query.GetQuery())).FirstOrDefaultAsync(cancellation).ConfigureAwait(false);
+            return await query.ProjectTo(this.context.Set<TEntity>()).Where(query.GetQuery()).FirstOrDefaultAsync(cancellation).ConfigureAwait(false);
         }
 
         public virtual Task RemoveAsync(TEntity entity, CancellationToken cancellation = default)
@@ -63,7 +63,7 @@ namespace Repositories.EntityFrameworkCore
             return Task.FromResult(this.context.Remove(entities));
         }
 
-        protected virtual IQueryable<TEntity> Hydrate(IQueryable<TEntity> queryable)
+        protected virtual IQueryable<TEntity> ProjectTo(IQueryable<TEntity> queryable)
         {
             return queryable;
         }

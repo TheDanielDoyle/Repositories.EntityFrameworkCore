@@ -13,7 +13,7 @@ namespace Repositories.EntityFrameworkCore.Samples.Data.Queries
             return apple => apple.Type == "Cortland";
         }
 
-        public IQueryable<Apple> Hydrate(IQueryable<Apple> entity)
+        public IQueryable<Apple> ProjectTo(IQueryable<Apple> entity)
         {
             return entity;
         }
