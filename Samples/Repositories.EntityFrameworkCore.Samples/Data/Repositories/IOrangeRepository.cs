@@ -1,9 +1,10 @@
-﻿using Repositories.Abstractions;
+﻿using System;
+using Repositories.Abstractions;
 using Repositories.EntityFrameworkCore.Samples.Models;
 
 namespace Repositories.EntityFrameworkCore.Samples.Data.Repositories
 {
-    internal interface IOrangeRepository : IRepository<Orange, int>
+    internal interface IOrangeRepository : IRepository<Orange, Guid>
     {
     }
 }

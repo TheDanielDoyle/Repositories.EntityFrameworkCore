@@ -54,7 +54,10 @@ namespace Repositories.EntityFrameworkCore.Samples
 
         private static async Task AddFruitsAsync(IUnitOfWork context)
         {
-            await context.Apples.AddAsync(new Apple("Cortland"));
+            await context.Apples.AddAsync(new Apple("Cortland")
+            {
+                Pip = new ApplePip(Guid.NewGuid(), 2)
+            });
             await context.Apples.AddAsync(new Apple("Opal"));
             await context.Apples.AddAsync(new Apple("Winesnap"));
 

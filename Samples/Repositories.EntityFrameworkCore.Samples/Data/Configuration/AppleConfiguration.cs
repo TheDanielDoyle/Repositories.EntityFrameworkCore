@@ -10,6 +10,7 @@ namespace Repositories.EntityFrameworkCore.Samples.Data.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Type);
+            builder.HasOne(x => x.Pip);
         }
     }
 }

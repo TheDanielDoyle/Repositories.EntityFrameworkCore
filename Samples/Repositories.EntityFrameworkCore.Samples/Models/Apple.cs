@@ -1,4 +1,5 @@
 ﻿using System;
+using Repositories.EntityFrameworkCore.Samples.Data.Queries;
 
 namespace Repositories.EntityFrameworkCore.Samples.Models
 {
@@ -14,6 +15,8 @@ namespace Repositories.EntityFrameworkCore.Samples.Models
         }
 
         public Guid Id { get; set; }
+
+        public ApplePip Pip { get; set; }
 
         public string Type { get; set; }
     }
